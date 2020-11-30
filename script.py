@@ -12,9 +12,15 @@ api = CONNECT_TO_TWITTER(API_KEY,
                          ACCESS_TOKEN, 
                          ACCESS_TOKEN_SECRET)
 
-str_search_words = "#prestige OR #prestigefinance OR #prestigefinancialservices"
-str_date_since = "2019-11-03"
-int_n_tweets = 100
+# scrape tweets with keywords
+df = GET_TWEETS(api=api, 
+                str_search_words="#prestige OR #prestigefinance OR #prestigefinancialservices", 
+                str_date_since='2019-11-03', 
+                int_n_tweets=2500, 
+                int_n_rounds=6)
+
+
+
 
 
 
@@ -31,7 +37,7 @@ def GET_TWEETS(api, str_search_words, str_date_since, int_n_tweets=2500, int_n_r
     # pull tweets at each round of tweet collection
     for a in range(int_n_rounds):
         # print message
-        print('Scraping round {a+1} of {int_n_runs} tweets.')
+        print(f'Scraping round {a+1} of {int_n_rounds} tweets.')
         # get the tweets as an iterable object
         iter_tweets = tw.Cursor(api.search, 
                                 q=str_search_words, 
