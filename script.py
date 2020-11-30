@@ -2,58 +2,59 @@
 import os
 # change dir
 os.chdir('M:\\Risk Management\\AaronE_scripts\\17_pulling_tweets\\pulling_tweets')
+from scripts.functions import *
 from twitter_dev_credentials import *
-from tweepy import OAuthHandler
-from tweepy.streaming import StreamListener
-import tweepy
-import json
 import pandas as pd
-import csv
-import re
-from textblob import TextBlob
-import string
-import preprocessor as p
-import os
-import time
 
-# pass twitter credentials to tweepy via its OAuthHandler
-auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET_KEY)
-auth.set_access_token(AUTH_ACCESS_TOKEN, AUTH_ACCESS_TOKEN_SECRET)
-api = tweepy.API(auth)
 
-search_words = "#hongkong OR #hkprotests OR #freehongkong OR #hongkongprotests OR #hkpolicebrutality OR #antichinazi OR #standwithhongkong OR #hkpolicestate OR #HKpoliceterrorist OR #standwithhk OR #hkpoliceterrorism"
+# define function to connect to twitter API
+def CONNECT_TO_TWITTER(API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET):
+    # pass twitter credentials to tweepy via its OAuthHandler
+    auth = tw.OAuthHandler(API_KEY, API_KEY_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    api = tw.API(auth, wait_on_rate_limit=True)
+    # return
+    return api
+
+
+
+
+
+
+
+
+
+search_words = "#prestige OR #prestigefinance OR #prestigefinancialservices"
 date_since = "2019-11-03"
 numTweets = 100
-numRuns = 6
-
-
-# Call the function scraptweets
-#scraptweets(search_words, date_since, numTweets, numRuns)
-
 
 # get the tweets as an iterable object
-iter_tweets = tweepy.Cursor(api.search, 
-                            q=search_words, 
-                            lang='en', 
-                            since=date_since, 
-                            tweet_mode='extended').items(numTweets)
+iter_tweets = tw.Cursor(api.search, 
+                        q=search_words, 
+                        lang='en', 
+                        since=date_since, 
+                        tweet_mode='extended').items(numTweets)
 
-# put tweets into a list
-list_tweets = [tweet for tweet in iter_tweets]
+# create empty df
+df_empty = pd.DataFrame()
 
-
-
-
-def scraptweets(search_words, date_since, numTweets, numRuns):
+# iterate through iter_tweets
+for tweet in iter_tweets:
+    # create dictionary
+    dict_ = {'handle_name': tweet.user.screen_name,
+             'date': tweet.created_at,
+             'location': tweet.user.location,
+             'n_followers': tweet.user.followers_count,
+             'text': tweet.full_text}
+    # append to df_empty
+    df_empty = df_empty.append(dict_, ignore_index=True)
     
-    # Define a for-loop to generate tweets at regular intervals
-    # We cannot make large API call in one go. Hence, let's try T times
     
-    # Define a pandas dataframe to store the date:
-    db_tweets = pd.DataFrame(columns = ['username', 'acctdesc', 'location', 'following',
-                                        'followers', 'totaltweets', 'usercreatedts', 'tweetcreatedts',
-                                        'retweetcount', 'text', 'hashtags']
-                                )
+    
+    
+
+
+
     program_start = time.time()
     for i in range(0, numRuns):
         # We will time how long it takes to scrape tweets for each run:
