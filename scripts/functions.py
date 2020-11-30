@@ -1,5 +1,7 @@
 # functions
 import tweepy as tw
+import time
+import pandas as pd
 
 # define function to connect to twitter API
 def CONNECT_TO_TWITTER(API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET):
@@ -9,3 +11,4 @@ def CONNECT_TO_TWITTER(API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRE
 	api = tw.API(auth, wait_on_rate_limit=True)
 	# return
 	return api
+
