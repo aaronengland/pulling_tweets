@@ -37,11 +37,11 @@ list_200 = [200 for x in range(n_200)]
 n_remainder = int_n_followers % 200
 # append to list_200
 list_200.append(n_remainder)
+"""
 
-# iterate through list_200 getting followers
+# get list of followers getting followers
 followers = api.followers(id=str_account_id,
                           count=200) # entered 200 because it maxes out
-"""
 
 # get the screen name and date followed account for each follower
 df_empty = pd.DataFrame()
@@ -54,6 +54,9 @@ for follower in followers:
                  'location': follower.location}
         # append to df_empyy
         df_empty = df_empty.append(dict_, ignore_index=True)
+
+# -----------------------------------------------------------------------------
+
 
 
 
