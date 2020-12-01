@@ -4,6 +4,7 @@ import os
 os.chdir('M:\\Risk Management\\AaronE_scripts\\17_pulling_tweets\\pulling_tweets')
 from scripts.functions import CONNECT_TO_TWITTER, GET_TWEETS
 from twitter_dev_credentials import API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
+import fb_dev_credentials as fb_cred
 
 # connect to API
 api = CONNECT_TO_TWITTER(API_KEY, 
@@ -56,8 +57,12 @@ for follower in followers:
         df_empty = df_empty.append(dict_, ignore_index=True)
 
 # -----------------------------------------------------------------------------
+import facebook
 
+graph = facebook.GraphAPI(access_token=fb_cred.ACCESS_TOKEN, 
+                          version='8.0')
 
+events = graph.request('search?q=utah%20homes%20for%20sale')
 
 
 
