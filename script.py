@@ -25,12 +25,23 @@ import pandas as pd
 # state the account name
 str_account_id = 'AllUtahHomes'
 
+"""
 # get number of followers
 int_n_followers = api.get_user(str_account_id).followers_count
 
-# get all followers of the account
+# see how many times 200 goes into int_n_followers
+n_200 = int_n_followers // 200
+# create list
+list_200 = [200 for x in range(n_200)]
+# get remainder
+n_remainder = int_n_followers % 200
+# append to list_200
+list_200.append(n_remainder)
+
+# iterate through list_200 getting followers
 followers = api.followers(id=str_account_id,
                           count=200) # entered 200 because it maxes out
+"""
 
 # get the screen name and date followed account for each follower
 df_empty = pd.DataFrame()
